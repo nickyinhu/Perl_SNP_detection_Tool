@@ -20,7 +20,6 @@ my $db = "newFungi";
 my $connectionInfo = "dbi:mysql:$db;localhost";
 my $user = $ARGV[3];
 my $passwd = $ARGV[4];
-# my $passwd="schumzie-01";
 # make connection to MySQL database
 print STDERR "\nConnecting to MySQL database $db with the user ID: $user\n";
 my $dbHandle = DBI->connect($connectionInfo, $user, $passwd, {RaiseError => 1});
@@ -37,19 +36,12 @@ $queryHandle->execute();
 my $count = 0;
 while(@results = $queryHandle->fetchrow_array() )
 {	$ID = $results[0];
-	#$ID = substr($ID, 1, length($ID)-1);
-#	my $com ="./missMatchGroup $contigNum $ID $results[1] $results[2] $spCodeUK $spCodeRef";
-	my $com ="missMatchGroup.pl $contigNum $ID $results[1] $results[2] $spCodeUK $spCodeRef"
-	#print "\n\tCOM::: $com";
+	my $com ="missMatchGroup.pl $contigNum $ID $results[1] $results[2] $spCodeUK $spCodeRef";
 	system($com);
-#	my $com2 ="./missOnlyGroup $contigNum $ID $results[1] $results[2] $spCodeUK $spCodeRef";
 	my $com2 ="missOnlyGroup.pl $contigNum $ID $results[1] $results[2] $spCodeUK $spCodeRef";
-	#	print "\n\tCOM2::: $com2";
 	system($com2);
-#	my $com3 ="./MapExons $spCodeRef $contigNum $ID $results[3] $spCodeUK";
 	my $com3 ="MapExons.pl $spCodeRef $contigNum $ID $results[3] $spCodeUK";
 
-	#	print "\n\tCOM3::: $com3\n\n";
 	system($com3);
 	$count++;
 	print"\n $count Genes processed" if $count%50 == 0;

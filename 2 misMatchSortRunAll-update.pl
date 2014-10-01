@@ -40,7 +40,7 @@ for(my $contig = 1; $contig < $totalContigs; $contig++)
 	$query = "Select * from  $tableName where contig = $contig  order by startPosition";
 	print "\n$query";
 	$queryHandle = $dbHandle->prepare($query);
-	$queryHandle->execute();	#print "\n create table: $tableName";
+	$queryHandle->execute();
 	my $count = 0;
 	while(@results = $queryHandle->fetchrow_array() )
 	{	
